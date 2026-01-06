@@ -1,3 +1,4 @@
+/* global BigInt */
 import { useState, useCallback } from 'react';
 import { ethers } from 'ethers';
 
