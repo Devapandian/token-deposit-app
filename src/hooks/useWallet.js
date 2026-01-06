@@ -43,10 +43,12 @@ export const useWallet = () => {
                                     ],
                                 });
                             } catch (addError) {
-                                throw new Error("Failed to add Sepolia network to MetaMask");
+                                throw new Error("Failed to add Sepolia network to MetaMask: " + addError.message);
                             }
+                        } else if (switchError.code === 4001) {
+                            throw new Error("Network switch rejected by user.");
                         } else {
-                            throw new Error("Failed to switch to Sepolia network");
+                            throw new Error("Failed to switch to Sepolia network: " + switchError.message);
                         }
                     }
                     // Re-initialize provider after switch
@@ -63,6 +65,17 @@ export const useWallet = () => {
             }
         } catch (err) {
             setError(err.message);
+        }
+    }, []);
+
+    useState(() => {
+        if (window.ethereum) {
+            window.ethereum.on('chainChanged', () => {
+                window.location.reload();
+            });
+            window.ethereum.on('accountsChanged', () => {
+                window.location.reload();
+            });
         }
     }, []);
 
