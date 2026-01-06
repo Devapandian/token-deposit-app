@@ -14,13 +14,13 @@ export const useWallet = () => {
             if (window.ethereum) {
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const network = await provider.getNetwork();
-                const targetChainId = BigInt(11155111); // Sepolia Chain ID
+                const targetChainId = BigInt(80002); // Polygon Amoy Chain ID
 
                 if (network.chainId !== targetChainId) {
                     try {
                         await window.ethereum.request({
                             method: 'wallet_switchEthereumChain',
-                            params: [{ chainId: '0xaa36a7' }], // 11155111 in hex
+                            params: [{ chainId: '0x13882' }], // 80002 in hex
                         });
                     } catch (switchError) {
                         // This error code indicates that the chain has not been added to MetaMask.
@@ -30,25 +30,25 @@ export const useWallet = () => {
                                     method: 'wallet_addEthereumChain',
                                     params: [
                                         {
-                                            chainId: '0xaa36a7',
-                                            chainName: 'Sepolia Test Network',
+                                            chainId: '0x13882',
+                                            chainName: 'Polygon Amoy Testnet',
                                             nativeCurrency: {
-                                                name: 'SepoliaETH',
-                                                symbol: 'ETH',
+                                                name: 'MATIC',
+                                                symbol: 'MATIC',
                                                 decimals: 18,
                                             },
-                                            rpcUrls: ['https://sepolia.infura.io/v3/'], // Or any public RPC
-                                            blockExplorerUrls: ['https://sepolia.etherscan.io'],
+                                            rpcUrls: ['https://rpc-amoy.polygon.technology/'],
+                                            blockExplorerUrls: ['https://amoy.polygonscan.com/'],
                                         },
                                     ],
                                 });
                             } catch (addError) {
-                                throw new Error("Failed to add Sepolia network to MetaMask: " + addError.message);
+                                throw new Error("Failed to add Polygon Amoy network to MetaMask: " + addError.message);
                             }
                         } else if (switchError.code === 4001) {
                             throw new Error("Network switch rejected by user.");
                         } else {
-                            throw new Error("Failed to switch to Sepolia network: " + switchError.message);
+                            throw new Error("Failed to switch to Polygon Amoy network: " + switchError.message);
                         }
                     }
                     // Re-initialize provider after switch

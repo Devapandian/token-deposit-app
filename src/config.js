@@ -4,4 +4,4 @@ export const CONTRACT_ADDRESSES = {
   TokenDeposit: "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"
 };
 
-export const CHAIN_ID = 11155111; // Sepolia testnet
+export const CHAIN_ID = 80002; // Polygon Amoy Testnet
